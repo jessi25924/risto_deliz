@@ -1,0 +1,1 @@
+web: gunicorn risto_deliz.wsgi
