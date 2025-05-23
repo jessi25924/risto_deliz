@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 
 def signup(request):
     if request.method == 'POST':
@@ -18,3 +19,8 @@ def signup(request):
 @login_required
 def dashboard(request):
     return render(request, 'booking_table/dashboard.html')
+
+
+class CustomLoginView(LoginView):
+    """Custom login view using the booking_table login template."""
+    template_name = 'booking_table/login.html'
