@@ -1,6 +1,14 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from .forms import SignUpForm
 
-# Create your views here.
-def index(request):
-    return HttpResponse("Booking table is working!")
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # logs the user in immediately
+            return redirect('dashboard')
+    else:
+        form = SignUpForm()
+    return render(request, 'booking_table/signup.html', {'form': form})
