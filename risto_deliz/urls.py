@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from booking_table import views as index_views
+from django.urls import include, path
 
 urlpatterns = [
-    path('', index_views.index, name='index'),
+    path('', include('booking_table.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),  # provides login/logout
     path('admin/', admin.site.urls),
 ]
