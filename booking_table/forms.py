@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Booking
 from .models import Table
+from django.core.exceptions import ValidationError
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=50, required=True, help_text='Your given name')
@@ -28,3 +29,22 @@ class BookingForm(forms.ModelForm):
             'date': forms.DateInput(attrs={'type': 'date'}),
             'time': forms.TimeInput(attrs={'type': 'time'}),
         }
+    
+    def clean(self):
+        """
+        Ensure no other Booking exists for the same table, date, and time.
+        """
+        cleaned = super().clean()
+        table = cleaned.get('table')
+        date  = cleaned.get('date')
+        time_ = cleaned.get('time')
+
+        if table and date and time_:
+            conflict = Booking.objects.filter(
+                table=table, date=date, time=time_
+            ).exists()
+            if conflict:
+                raise ValidationError(
+                    "That table is already booked at this date and time."
+                )
+        return cleaned

@@ -39,53 +39,43 @@ ALL_SLOTS = [
 def book_table(request):
     """
     Display and process the booking form.
-    
-    GET params:
-        - date (DD-MM-YYYY)
-        - table (table)
-    
-    After selecting a date and table, the form's time choices get overriden
-    to only show free slots (or "No Availability").
 
-    On POST, validates and saves a booking linked to request.user.
+    Filters the form.time.choices based on 'date' and 'table' from
+    either GET (for initial slot loading) or POST (so slots persist).
     """
+    # Grab date & table from GET or POST
+    date_str = request.GET.get('date') or request.POST.get('date')
+    table_id = request.GET.get('table') or request.POST.get('table')
 
-    # (unbound for GET, or bound for POST)
+    # Bind the form to POST data if present
     form = BookingForm(request.POST or None)
 
-    # If the user has selected date & table, filter time choices
-    date_str = request.GET.get('date')
-    table_id = request.GET.get('table')
+    # If we have both date and table, filter time choices
     if date_str and table_id:
         try:
             date = datetime.strptime(date_str, '%d-%m-%Y').date()
-            # Find times already booked for that date+table
-            booked = Booking.objects.filter(date=date, table_id=table_id)\
-                                    .values_list('time', flat=True)
-            # Build available choices
+            # times already booked
+            booked = Booking.objects.filter(
+                date=date, table_id=table_id
+            ).values_list('time', flat=True)
+            # build remaining slots
             choices = [(t, t) for t in ALL_SLOTS if t not in booked]
             if not choices:
-                # No slots left
                 choices = [('', 'No availability')]
         except Exception:
-            # In case of parsing errors or invalid table_id
             choices = [('', 'No availability')]
 
-        # Override only the 'time' field on the form
         form.fields['time'].choices = choices
 
-    # Handle submission
-    if request.method == 'POST':
-        if form.is_valid():
-            booking = form.save(commit=False)
-            booking.user = request.user
-            booking.save()
-            return redirect('dashboard')  # make sure this name is correct!
+    # On POST, if valid, save and redirect
+    if request.method == 'POST' and form.is_valid():
+        booking = form.save(commit=False)
+        booking.user = request.user
+        booking.save()
+        return redirect('dashboard')
 
-    # Pass along selected date/table so template can keep them
-    context = {
+    return render(request, 'booking_table/book.html', {
         'form': form,
         'selected_date': date_str or '',
         'selected_table': table_id or '',
-    }
-    return render(request, 'booking_table/book.html', context)
+    })

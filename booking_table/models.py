@@ -65,6 +65,7 @@ class Booking(models.Model):
 
     class Meta:
         ordering = ['date', 'time']
+        
     
     def __str__(self):
         """

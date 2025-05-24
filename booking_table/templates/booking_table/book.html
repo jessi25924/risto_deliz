@@ -1,12 +1,13 @@
-{% load static %}
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Make a Booking{% endblock %}
 {% block content %}
   <h2>Book a Table</h2>
   <form method="post">
     {% csrf_token %}
-
+    
+    {{ form.non_field_errors }}
     <p>{{ form.table.label_tag }}
        {{ form.table }}
     </p>
@@ -25,10 +26,7 @@
     <p>{{ form.phone.label_tag }} {{ form.phone }}</p>
     <p>{{ form.suggestion.label_tag }} {{ form.suggestion }}</p>
 
-    <button type="submit"
-      {% if form.fields.time.choices|length <= 1 %}disabled{% endif %}>
-      Book Now
-    </button>
+    <button type="submit">Book Now</button>
   </form>
 
   <script src="{% static 'js/booking.js' %}"></script>
