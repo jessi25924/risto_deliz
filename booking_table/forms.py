@@ -29,22 +29,3 @@ class BookingForm(forms.ModelForm):
             'date': forms.DateInput(attrs={'type': 'date'}),
             'time': forms.TimeInput(attrs={'type': 'time'}),
         }
-    
-    def clean(self):
-        """
-        Ensure no other Booking exists for the same table, date, and time.
-        """
-        cleaned = super().clean()
-        table = cleaned.get('table')
-        date  = cleaned.get('date')
-        time_ = cleaned.get('time')
-
-        if table and date and time_:
-            conflict = Booking.objects.filter(
-                table=table, date=date, time=time_
-            ).exists()
-            if conflict:
-                raise ValidationError(
-                    "That table is already booked at this date and time."
-                )
-        return cleaned
