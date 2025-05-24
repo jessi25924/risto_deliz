@@ -4,6 +4,7 @@ from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 
+
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
