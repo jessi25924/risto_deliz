@@ -12,3 +12,12 @@ class BookingAdmin(admin.ModelAdmin):
     )
     list_filter = ('date', 'status')
     ordering = ('date', 'time')
+
+
+@admin.register(Table)
+class TableAdmin(admin.ModelAdmin):
+    """
+    Admin interface for managing restaurant tables.
+    """
+    list_display = ('table_number', 'seating_capacity')
+    ordering = ('table_number',)

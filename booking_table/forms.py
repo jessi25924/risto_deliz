@@ -16,9 +16,14 @@ class SignUpForm(UserCreationForm):
 class BookingForm(forms.ModelForm):
     """
     Interface for adding or modifying a booking with fields for contact information and suggestion or request.
+    Custom widgets added to enable date and time pickers.
     """
     class Meta:
         model = Booking
         fields = (
             'table', 'date', 'time', 'guest_count', 'email', 'phone', 'suggestion'
         )
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'time': forms.TimeInput(attrs={'type': 'time'}),
+        }
