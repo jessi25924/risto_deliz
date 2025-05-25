@@ -7,8 +7,15 @@ from .forms import BookingForm
 from .models import Booking
 from datetime import datetime
 from django.db import IntegrityError
+from datetime import datetime, time
 
 def signup(request):
+    """
+    Handle user signup process.
+    If the request method is POST, validate and process the submitted SignUpForm.
+    If valid, create a new user, log them in, and redirect to the dashboard.
+    if the request mehtod is GET, display a blank signup form.
+    """
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -22,6 +29,9 @@ def signup(request):
 
 @login_required
 def dashboard(request):
+    """
+    Display the logged-in users booking on the dashboard, ordereed by date and time.
+    """
     bookings = Booking.objects.filter(user=request.user).order_by('date', 'time')
     return render(request, 'booking_table/dashboard.html', {'bookings': bookings})
 
@@ -31,55 +41,24 @@ class CustomLoginView(LoginView):
     template_name = 'booking_table/login.html'
 
 
-# Time slots
-ALL_SLOTS = [
-    "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
-    "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"
-]
-
 @login_required
 def book_table(request):
     """
-    Display and process the booking form.
-
-    Filters the form.time.choices based on 'date' and 'table' from
-    either GET (for initial slot loading) or POST (so slots persist).
+    Display and process the booking form with HTML5 date & time pickers.
     """
-    # Grab date & table from GET or POST
-    date_str = request.GET.get('date') or request.POST.get('date')
-    table_id = request.GET.get('table') or request.POST.get('table')
-
-    # Bind the form to POST data if present
+    # Bind the form to POST data (or unbound if GET)
     form = BookingForm(request.POST or None)
 
-    # If we have both date and table, filter time choices
-    if date_str and table_id:
-        try:
-            date = datetime.strptime(date_str, '%d-%m-%Y').date()
-            # times already booked
-            booked = Booking.objects.filter(
-                date=date, table_id=table_id
-            ).values_list('time', flat=True)
-            # build remaining slots
-            choices = [(t, t) for t in ALL_SLOTS if t not in booked]
-            if not choices:
-                choices = [('', 'No availability')]
-        except Exception:
-            choices = [('', 'No availability')]
-
-        form.fields['time'].choices = choices
-
-    # On POST, if valid, save and redirect
+    # On POST: validate, save, and redirect
     if request.method == 'POST' and form.is_valid():
         booking = form.save(commit=False)
         booking.user = request.user
         booking.save()
         return redirect('dashboard')
 
+    # Render the form (empty or with errors)
     return render(request, 'booking_table/book.html', {
         'form': form,
-        'selected_date': date_str or '',
-        'selected_table': table_id or '',
     })
 
 
