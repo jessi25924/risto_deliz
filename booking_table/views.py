@@ -1,13 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
-from .forms import SignUpForm
+from .forms import SignUpForm, BookingForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
-from .forms import BookingForm
 from .models import Booking
-from datetime import datetime
-from django.db import IntegrityError
-from datetime import datetime, time
 
 def signup(request):
     """
