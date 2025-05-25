@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
@@ -22,7 +22,8 @@ def signup(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'booking_table/dashboard.html')
+    bookings = Booking.objects.filter(user=request.user).order_by('date', 'time')
+    return render(request, 'booking_table/dashboard.html', {'bookings': bookings})
 
 
 class CustomLoginView(LoginView):
