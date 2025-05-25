@@ -6,6 +6,7 @@ from django.contrib.auth.views import LoginView
 from .forms import BookingForm
 from .models import Booking
 from datetime import datetime
+from django.db import IntegrityError
 
 def signup(request):
     if request.method == 'POST':
@@ -79,3 +80,39 @@ def book_table(request):
         'selected_date': date_str or '',
         'selected_table': table_id or '',
     })
+
+
+@login_required
+def edit_booking(request, pk):
+    """
+    Let user edit their booking.
+    If a unique_together violation occurs, show an error message.
+    """
+    booking = get_object_or_404(Booking, pk=pk, user=request.user)
+    form = BookingForm(request.POST or None, instance=booking)
+    error = None
+
+    if request.method == 'POST':
+        try:
+            if form.is_valid():
+                form.save()
+                return redirect('dashboard')
+        except IntegrityError:
+            error = "Table is already booked at the selected date and time"
+    
+    return render(request, 'booking_table/edit_booking.html', {
+        'form': form,
+        'booking': booking,
+        'error': error,
+    })
+
+
+@login_required
+def cancel_booking(request, pk):
+    """
+    Mark a booking as cancelled.
+    """
+    booking = get_object_or_404(Booking, pk=pk, user=request.user)
+    booking.status = 'Cancelled'
+    booking.save()
+    return redirect('dashboard')
