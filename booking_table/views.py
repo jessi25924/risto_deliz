@@ -4,6 +4,11 @@ from .forms import SignUpForm, BookingForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from .models import Booking, MenuItem
+from django.core.mail import send_mail
+from django.urls import reverse
+from django.conf import settings
+from django.contrib import messages
+
 
 def signup(request):
     """
@@ -41,6 +46,7 @@ class CustomLoginView(LoginView):
 def book_table(request):
     """
     Display and process the booking form with HTML5 date & time pickers.
+    On successful booking, send confirmatoin email with booking details.
     """
     # Bind the form to POST data (or unbound if GET)
     form = BookingForm(request.POST or None)
@@ -50,7 +56,29 @@ def book_table(request):
         booking = form.save(commit=False)
         booking.user = request.user
         booking.save()
-        return redirect('dashboard')
+
+        # Generate cancellation link
+        cancel_url = request.build_absolute_uri(
+            reverse('cancel_booking', args=[booking.pk])
+        )
+
+        # Compose confirmation email
+        message = (
+            f"Hi {booking.user.username},\n\n"
+            f"Your booking is confirmed for {booking.date} at {booking.time}.\n"
+            f"Guests: {booking.guest_count}\n\n"
+            f"If you need to cancel, click below:\n{cancel_url}\n\n"
+            f"Thank you for booking with us!"
+        )
+
+        send_mail(
+            subject='Booking Confirmation',
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[booking.email], 
+            fail_silently=False,
+        )
+        return redirect('dashboard') 
 
     # Render the form (empty or with errors)
     return render(request, 'booking_table/book.html', {
@@ -86,11 +114,13 @@ def edit_booking(request, pk):
 @login_required
 def cancel_booking(request, pk):
     """
-    Mark a booking as cancelled.
+    Allow users to cancel their booking using a secure link.
+    Mark booking status as cancelled.
     """
     booking = get_object_or_404(Booking, pk=pk, user=request.user)
     booking.status = 'Cancelled'
     booking.save()
+    messages.success(request, "Your booking has been cancelled.")
     return redirect('dashboard')
 
 
