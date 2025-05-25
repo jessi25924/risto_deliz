@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Table, Booking
+from .models import MenuItem
 
 # Register your models here.
 @admin.register(Booking)
@@ -21,3 +22,12 @@ class TableAdmin(admin.ModelAdmin):
     """
     list_display = ('table_number', 'seating_capacity')
     ordering = ('table_number',)
+
+
+class MenuItemAdmin(admin.ModelAdmin):
+    """
+    
+    """
+    list_display = ('name', 'category', 'price')
+
+admin.site.register(MenuItem, MenuItemAdmin)
