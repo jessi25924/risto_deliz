@@ -4,7 +4,6 @@ from .forms import SignUpForm, BookingForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from .models import Booking, MenuItem
-from collections import defaultdict
 
 def signup(request):
     """
@@ -95,12 +94,17 @@ def cancel_booking(request, pk):
     return redirect('dashboard')
 
 
-def menu_view(request):
+def menu(request):
     """
     Dsiplay the menu items grouped by category.
     """
-    items = MenuItem.objects.all().order_by('category', 'name')
-    categories = defaultdict(list)
+    items = MenuItem.objects.all()
+    grouped_items = {}
+
     for item in items:
-        categories[item.category].append(item)
-    return render(request, 'booking_table/menu.html', {'categories': categories})
+        category = item.category
+        if category not in grouped_items:
+            grouped_items[category] = []
+        grouped_items[category].append(item)
+
+    return render(request, 'booking_table/menu.html', {'grouped_items': grouped_items})

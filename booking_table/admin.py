@@ -26,7 +26,7 @@ class TableAdmin(admin.ModelAdmin):
 
 class MenuItemAdmin(admin.ModelAdmin):
     """
-    
+    Admin configuration for the MenuItem model. 
     """
     list_display = ('name', 'category', 'price')
 

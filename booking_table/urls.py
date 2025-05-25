@@ -9,7 +9,8 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(template_name='booking_table/logout.html'), name='logout'),
-    path('book/', book_table, name='book_table'),
+    path('book/', views.book_table, name='book_table'),
     path('booking/<int:pk>/edit/', views.edit_booking, name='edit_booking'),
     path('booking/<int:pk>/cancel/', views.cancel_booking, name='cancel_booking'),
+    path('menu/', views.menu, name='menu'),
 ]

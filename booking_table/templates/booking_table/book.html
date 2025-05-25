@@ -4,6 +4,8 @@
 {% block title %}Make a Booking{% endblock %}
 {% block content %}
   <h2>Book a Table</h2>
+
+  <p><a href="{% url 'menu' %}">View Our Menu</a></p>
   <form method="post">
     {% csrf_token %}
     
