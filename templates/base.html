@@ -1,24 +1,81 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}Risto Deliz{% endblock %}</title>
-</head>
-<body>
-  <header>
-    <nav>
-      {% if user.is_authenticated %}
-        Hello, {{ user.username }} |
-        <a href="{% url 'logout' %}">Log out</a>
-      {% else %}
-        <a href="{% url 'login' %}">Log in</a> |
-        <a href="{% url 'signup' %}">Sign up</a>
-      {% endif %}
-    </nav>
-  </header>
+  <title>{% block title %}RistoDeliz{% endblock %}</title>
 
-  <main>
+  <!-- Bootstrap CSS-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+  {% block extra_head %} {% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- Navbar-->
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <img src="{% static 'images/logo.png' %}" alt="RistoDeliz" height="30">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="mainNav" aria-expanded="false">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'menu' %}">Menu</a></li>
+        <li class="nav-item"><span class="navbar-text">RistoDeliz</span></li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"></a>Log out</li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}"></a>Sign Up</li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"></a>Log In</li>
+        {% endif %}
+          <li class="nav-item"><a class="btn btn-primary ml-2" href="{% url 'book' %}"></a>Book Now</li>
+      </ul>
+    </div>
+   </nav>
+  
+  <!-- Main Content-->
+   <main>
     {% block content %}{% endblock %}
   </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-4 mt-auto">
+    <div class="container">
+      <div class="row">
+        <!-- Contact Details -->
+        <div class="col-md-4">
+          <h5>Contact</h5>
+          <p>Commercial Street<br>Newport, NP12 3AB<br>Phone: 0123 4567 8910<br>email: ristodeliz@gmail.com</p>
+        </div>
+        <!-- Opening Times -->
+        <div class="col-md-4">
+          <h5>Opening Times</h5>
+          <p>Mon-Thur: 12:00-22:00<br>Fri-Sat: 10:00-23:00<br>Sun: 10:00-22:00</p>
+        </div>
+        <!-- Social Media Link-->
+         <div class="col-md-4">
+          <h5>Follow Us</h5>
+          <a class="text-light mr-2" href="https://www.facebook.com" target="_blank" rel="noopener"
+            aria-label="Visit our Facebook page (open in a new tab)">Facebook</a>
+          <a class="text-light mr-2" href="https://www.instagram.com/" target="_blank" rel="noopener"
+            aria-label="Visit our instagram page (open in a new tab)">Instagram</a>
+          <a class="text-light mr-2" href="https://x.com/" target="_blank" rel="noopener"
+            aria-label="Visit our fed (open in a new tab)">X</a>
+         </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS script-->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 </body>
 </html>
