@@ -33,10 +33,11 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"></a>Log out</li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Log out</a></li>
         {% else %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}"></a>Sign Up</li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"></a>Log In</li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
+          <li class="nav-item"><a href="{% url 'book_table' %}" clas="btn btn-warning ms-2">Book a Table</a></li>
         {% endif %}
       </ul>
     </div>

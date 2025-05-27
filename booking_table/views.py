@@ -45,7 +45,7 @@ def dashboard(request):
 
 class CustomLoginView(LoginView):
     """Custom login view using the booking_table login template."""
-    template_name = 'booking_table/login.html'
+    template_name = 'registration/login.html'
 
 
 @login_required
