@@ -10,6 +10,12 @@ from django.conf import settings
 from django.contrib import messages
 
 
+def home(request):
+    """
+    Landing page with site introduction
+    """
+    return render(request, 'home.html')
+
 def signup(request):
     """
     Handle user signup process.
