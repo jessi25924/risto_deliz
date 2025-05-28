@@ -1,20 +1,40 @@
 {% extends 'base.html' %}
+
+{% load static %}
 {% block title %}RistoDeliz{% endblock %}
 
 
 {% block content %}
-<div class="container my-5">
-    <div class="row">
-        <!-- Restaurant Intro-->
-        <div class="col-md-12 text-center mb-5">
-            <div class="p-4 rounded">
-                <h2>A Taste of Italy, Right at Your Table</h2>
+<section class="hero">
+    <div class="hero-text text-center">
+        <h1>A Taste of Italy, Right at Your Table</h1>
                 <p>RistoDeliz is where the soul of Italy is served on every plate. Form the rich aroma of slow-simmered sauces to the first bite of handmade pasta,
                     our dishes bring you the warmth and passion of true Italian cooking.<br>Prepare to savour an experience that's as genuine as Nonna's kitchen.
                 </p>
                 <a href="{% url 'book_table' %}" class="btn btn-primary mt-3">Book a Table</a>
-            </div>
-        </div>
     </div>
-</div>
+</section>
+
+<!-- Meal Deal -->
+<section class="container my-5 d-flex flex-column flex-md-row align-items-center">
+    <div class="col-md-6">
+        <img src="{% static 'images/meal-deal.jpg' %}" alt="Special Deal" class="img-fluid rounded shadow">
+    </div>
+    <div class="col-md-6 px-4">
+        <h2>Spring's Meal Deal</h2>
+        <p>Enjoy our Special Offer for £15.99! Limited time offer.</p>
+    </div>
+</section>
+
+<!-- Sign Up Invite -->
+<section class="container my-5 d-flex flex-column-reverse flex-md-row align-items-center">
+    <div class="col-md-6 px-4">
+        <h2>Join Us!</h2>
+        <p>Sign up to receive exclusive offers!</p>
+        <a href="{% url 'signup' %}" class="btn btn-success mt-2">Click here to Join!</a>
+    </div>
+    <div class="col-md-6">
+        <img src="{% static 'images/signup-invite.jpg' %}" alt="Join Us" class="img-fluid rounded shadow">
+    </div>
+</section>
 {% endblock %}
