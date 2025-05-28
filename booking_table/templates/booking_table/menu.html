@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Restaurant Menu</h1>
+<div class="page-wrapper menu-page">
+  <h1>Restaurant Menu</h1>
 
 {% for category, items in grouped_items.items %}
   <h2>{{ category }}</h2>
@@ -15,4 +16,5 @@
 {% endfor %}
 
 <a href="{% url 'book_table' %}">Back to Booking</a>
+</div>
 {% endblock %}

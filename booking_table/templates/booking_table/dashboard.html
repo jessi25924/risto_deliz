@@ -3,6 +3,7 @@
 {% block title %}Your Dashboard{% endblock %}
 
 {% block content %}
+<div class="page-wrapper menu-page">
   <h2>Welcome, {{ user.get_full_name|default:user.username }}!</h2>
   <p>This is your dashboard. Here you’ll see and manage your bookings.</p>
   <!-- Later I’ll list bookings with Edit/Cancel links -->
@@ -30,4 +31,6 @@
     {% endfor %}
   </table>
   <li class="nav-item"><a href="{% url 'book_table' %}" clas="btn btn-warning ms-2">Back to Booking</a></li>
+</div>
+  
 {% endblock %}

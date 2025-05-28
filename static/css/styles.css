@@ -14,7 +14,7 @@
 
 /* full-page background*/
 body {
-    background: url(../images/background.jpg) no-repeat center center fixed;
+    background: url(../images/background.jpg) no-repeat center center;
     background-size: cover;
     color: var(--primary-color);
     font-family: var(--primary-font);
@@ -41,6 +41,16 @@ main .container {
 
 .navbar-brand, .navbar-link, .footer a {
     color: var(--secondary-color) !important;
+}
+
+/* Shared style for all content pages but home */
+.page-wrapper {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-top: 50px; 
+    margin-bottom: 50px;
 }
 
 /* Footer background */
