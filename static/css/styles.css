@@ -58,6 +58,10 @@ footer {
     background-color: var(--background-contrast-color);
 }
 
+a {
+    text-decoration: none;
+}
+
 /* override any Bootstrap defaults if needed */
 .navbar .btn-primary:hover {
     background-color: #bfa440; /* slightly lighter gold on hover*/
