@@ -29,3 +29,9 @@ class BookingForm(forms.ModelForm):
             'date': forms.DateInput(attrs={'type': 'date'}),
             'time': forms.TimeInput(attrs={'type': 'time'}),
         }
+    
+    # Idea suggested by Lewis (Cohort facilitator): Prefill email field with logged-in user's email
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'email' in self.fields:
+            self.fields['email'].widget.attrs['readonly'] = True

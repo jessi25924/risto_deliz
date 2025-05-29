@@ -54,8 +54,14 @@ def book_table(request):
     Display and process the booking form with HTML5 date & time pickers.
     On successful booking, send confirmatoin email with booking details.
     """
-    # Bind the form to POST data (or unbound if GET)
-    form = BookingForm(request.POST or None)
+
+    # set initial if user is authenticated / Idea suggested by Lewis (Cohort facilitator): Prefill email field with logged-in user's email
+    initial_data = {}
+    if request.user.is_authenticated:
+        initial_data['email'] = request.user.email
+
+    # Create form with initial data
+    form = BookingForm(request.POST or None, initial=initial_data)
 
     # On POST: validate, save, and redirect
     if request.method == 'POST' and form.is_valid():
