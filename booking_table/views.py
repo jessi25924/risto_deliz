@@ -53,6 +53,7 @@ def book_table(request):
     """
     Display and process the booking form with HTML5 date & time pickers.
     On successful booking, send confirmatoin email with booking details.
+    Render a success template with link to dashboard.
     """
 
     # set initial if user is authenticated / Idea suggested by Lewis (Cohort facilitator): Prefill email field with logged-in user's email
@@ -69,11 +70,6 @@ def book_table(request):
         booking.user = request.user
         booking.save()
 
-        # Generate cancellation link
-        cancel_url = request.build_absolute_uri(
-            reverse('cancel_booking', args=[booking.pk])
-        )
-
         # Compose confirmation email
         message = (
             f"Hi {booking.user.username},\n\n"
@@ -89,7 +85,8 @@ def book_table(request):
             recipient_list=[booking.email], 
             fail_silently=False,
         )
-        return redirect('dashboard') 
+        #render success page instead of redirect
+        return render(request, 'booking_table/booking_success.html') 
 
     # Render the form (empty or with errors)
     return render(request, 'booking_table/book.html', {
