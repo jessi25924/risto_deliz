@@ -80,11 +80,10 @@ def book_table(request):
             f"Thank you for reserving a table on {booking.date} at {booking.time}.\n"
             f"For {booking.guest_count} guest.\n\n"
             f"This is not a confirmation yet, a member of staff will contact you shortly to confirm your table."
-            f"If you need to cancel, click below:\n{cancel_url}\n\n"
         )
         #Idea suggested by Lewis (Cohort facilitator)
         send_mail(
-            subject='Booking Confirmation',
+            subject='Booking Request Confirmation',
             message=message,
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[booking.email], 
