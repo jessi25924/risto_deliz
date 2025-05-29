@@ -5,13 +5,25 @@
 
 
 {% block content %}
-<section class="hero">
-    <div class="hero-text text-center">
+<!-- Hero Section -->
+<section class="hero text-center">
+    <div class="hero-text">
         <h1>A Taste of Italy, Right at Your Table</h1>
-                <p>RistoDeliz is where the soul of Italy is served on every plate. Form the rich aroma of slow-simmered sauces to the first bite of handmade pasta,
-                    our dishes bring you the warmth and passion of true Italian cooking.<br>Prepare to savour an experience that's as genuine as Nonna's kitchen.
-                </p>
-                <a href="{% url 'book_table' %}" class="btn btn-primary mt-3">Book a Table</a>
+        <a href="{% url 'book_table' %}" class="btn btn-primary mt-3">Book a Table</a>
+    </div>
+</section>
+
+<!-- Introduction -->
+<section class="container-fluid py-4 bg-light mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 text-center">
+            <p fs-4>
+                RistoDeliz is where the soul of Italy is served on every plate.
+                Form the rich aroma of slow-simmered sauces to the first bite of handmade pasta,
+                our dishes bring you the warmth and passion of true Italian cooking.<br>
+                Prepare to savour an experience that's as genuine as Nonna's kitchen.
+            </p>
+        </div>
     </div>
 </section>
 
@@ -26,8 +38,22 @@
     </div>
 </section>
 
+<!-- Private Dining -->
+<section class="container-fluid py-4 bg-light">
+    <div class="row justify-content-center">
+        <div class="col-md-10 text-center">
+            <h2>Private Dining</h2>
+            <p fs-4>
+                At RistoDeliz, we offer private dining options perfect for intimate gatherings, celebrations, or business events.<br>
+                Please contact the restaurant directly, we will be happy to discuss your requirements,
+                and create a memorable occasion just for you!
+            </p>
+        </div>
+    </div>
+</section>
+
 <!-- Sign Up Invite -->
-<section class="container my-5 d-flex flex-column-reverse flex-md-row align-items-center">
+<section class="container d-flex flex-column-reverse flex-md-row align-items-center mt-5 mb-5">
     <div class="col-md-6 px-4">
         <h2>Join Us!</h2>
         <p>Sign up to receive exclusive offers!</p>
