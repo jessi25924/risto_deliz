@@ -120,14 +120,24 @@ def edit_booking(request, pk):
 @login_required
 def cancel_booking(request, pk):
     """
-    Allow users to cancel their booking using a secure link.
-    Mark booking status as cancelled.
+    COnfirm and process booking cancellation.
+    GET: show a confirmation page.
+    POST: mark as cancelled and show a success page.
     """
     booking = get_object_or_404(Booking, pk=pk, user=request.user)
-    booking.status = 'Cancelled'
-    booking.save()
-    messages.success(request, "Your booking has been cancelled.")
-    return redirect('dashboard')
+    
+    if request.method == 'POST':
+        # user confirmed cancellation
+        booking.status = 'Cancelled'
+        booking.save()
+        return render(request, 'booking_table/cancel_success.html', {
+            'booking': booking
+        })
+    
+    # GET: ask for confirmaiton
+    return render(request, 'booking_table/confirm_cancel.html', {
+        'booking': booking
+    })
 
 
 def menu(request):
