@@ -40,8 +40,9 @@ main .container {
 }
 
 /* Navbar */
-.navbar-dark {
-    background-color: var(--background-contrast-color) !important;
+.navbar.navbar-transparent .navbar-nav .nav-link,
+.navbar.navbar-transparent .navbar-text {
+    color: white !important;
 }
 
 /* Buttons and Links*/
