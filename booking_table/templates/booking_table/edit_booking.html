@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Edit Booking{% endblock %}
 {% block content %}
+<div class="page-wrapper">
   <h2>Edit Booking</h2>
+  <p><a href="{% url 'dashboard' %}">Back to My Bookings</a></p>
   {% if error %}
     <p style="color:red;">{{ error }}</p>
   {% endif %}
@@ -10,5 +12,5 @@
     {{ form.as_p }}
     <button type="submit">Save Changes</button>
   </form>
-  <p><a href="{% url 'dashboard' %}">Back to My Bookings</a></p>
+</div>
 {% endblock %}
