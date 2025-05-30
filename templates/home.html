@@ -8,7 +8,8 @@
 <!-- Hero Section -->
 <section class="hero text-center">
     <div class="hero-text">
-        <h1>A Taste of Italy, Right at Your Table</h1>
+        <h1 class="hero-title">RistoDeliz</h1>
+        <h2 class="hero-subtitle"><i>"A Taste of Italy, Right at Your Table"</i></h2>
     </div>
 </section>
 
@@ -22,7 +23,8 @@
                 our dishes bring you the warmth and passion of true Italian cooking.<br>
                 Prepare to savour an experience that's as genuine as Nonna's kitchen.
             </p>
-            <a href="{% url 'book_table' %}" class="btn btn-primary mt-3">Book a Table</a>
+            <a href="{% url 'book_table' %}" class="btn btn-primary btn-green-hover mt-3 me-3">Book a Table</a> <!--btn-green-hover to override btn-primary-->
+            <a href="{% url 'menu' %}" class="btn btn-primary btn-green-hover mt-3">View our Menu</a>
         </div>
     </div>
 </section>
@@ -48,6 +50,7 @@
                 Please contact the restaurant directly, we will be happy to discuss your requirements,
                 and create a memorable occasion just for you!
             </p>
+            <p>Give us a ring @ 0123 4567 8910</p>
         </div>
     </div>
 </section>

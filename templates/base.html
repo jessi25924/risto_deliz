@@ -15,6 +15,12 @@
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/098aed24e4.js" crossorigin="anonymous"></script>
 
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png'%}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png'%}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png'%}">
+  <link rel="manifest" href="{% static 'images/site.webmanifest'%}">
+
   {% block extra_head %} {% endblock %}
 </head>
 
@@ -39,9 +45,6 @@
         <li class="nav-item"><a class="nav-link fs-5" href="{% url 'home' %}">Home</a></li>
         <li class="nav-item"><a class="nav-link fs-5" href="{% url 'menu' %}">Menu</a></li>
       </ul>
-
-      <!-- Center Title -->
-      <span class="navbar-text mx-auto fw-bold fs-1">RistoDeliz</span>
 
       <!-- Right Links -->
       <ul class="navbar-nav">
