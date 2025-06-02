@@ -5,10 +5,13 @@
   <div class="page-wrapper mt-5">
     <h2>Cancel Booking</h2>
     <p>Do you really want to cancel your booking for {{ booking.date }} at {{ booking.time }}?</p>
+
+    <div class="d-flex justify-content-start gap-3 mt-4">
     <form method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger"><a href="'booking_table/cancel_success.html'"></a>Yes</button>
-        <button type="submit" class="btn btn-primary"><a href="{% url 'dashboard' %}">No</a></button>
     </form>
+    <a href="{% url 'dashboard' %}" class="btn btn-primary">No</a>
+    </div>
   </div>
   {% endblock %}
