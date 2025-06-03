@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from booking_table.views import home
+from booking_table import views as booking_table_views
 
 urlpatterns = [
     path('', home, name='home'),
@@ -24,3 +25,5 @@ urlpatterns = [
     path('', include('booking_table.urls')),
     path('admin/', admin.site.urls),
 ]
+
+handler404 = booking_table_views.custom_404_view
