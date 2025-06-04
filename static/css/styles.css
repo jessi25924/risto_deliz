@@ -87,6 +87,25 @@ main .container {
     margin-top: 5rem;
 }
 
+.menu-bg {
+    background-image: url('/static/images/menu-background.webp');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.glass-box {
+    color: black;
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(30px);
+    margin: 2rem auto;
+    padding: 2rem;
+    max-width: 800px;
+    width: 90%;
+}
+
 /* override built-in textarea style*/
 .page-wrapper textarea {
   height: 120px;

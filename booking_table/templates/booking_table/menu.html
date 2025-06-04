@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="page-wrapper">
-  <h1>Restaurant Menu</h1>
+<div class="menu-bg py-5">
+  <div class="glass-box p-4 rounded">
+    <h1>Restaurant Menu</h1>
 
-{% for category, items in grouped_items.items %}
-  <h2>{{ category }}</h2>
-  <ul>
-    {% for item in items %}
-      <li>
-        <strong>{{ item.name }}</strong>: {{ item.description }} – £{{ item.price }}
-      </li>
+    {% for category, items in grouped_items.items %}
+      <h2>{{ category }}</h2>
+      <ul>
+        {% for item in items %}
+          <li>
+            <strong>{{ item.name }}</strong>: {{ item.description }} – £{{ item.price }}
+          </li>
+        {% endfor %}
+      </ul>
     {% endfor %}
-  </ul>
-{% endfor %}
 
-<a href="{% url 'book_table' %}">Back to Booking</a>
+    <a href="{% url 'book_table' %}" class="btn btn-primary mt-4">Back to Booking</a>
+  </div>
 </div>
 {% endblock %}
