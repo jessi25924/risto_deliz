@@ -3,7 +3,7 @@
 {% block title %}Your Dashboard{% endblock %}
 
 {% block content %}
-<div class="page-wrapper">
+<div class="page-wrapper dashboard-wrapper">
   <h2>Welcome, {{ user.get_full_name|default:user.username }}!</h2>
   <p>This is your dashboard. Here you’ll see and manage your bookings.</p>
    <h3>My Bookings</h3>
@@ -29,7 +29,7 @@
     </tr>
     {% endfor %}
   </table>
-  <li class="nav-item"><a href="{% url 'book_table' %}" clas="btn btn-warning ms-2">Back to Booking</a></li>
+  <link class="nav-item"><a href="{% url 'book_table' %}" class="btn btn-warning mt-4 ms-2">Back to Booking</a></link>
 </div>
   
 {% endblock %}
