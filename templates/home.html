@@ -1,103 +1,153 @@
-{% extends 'base.html' %}
-
-{% load static %}
-{% block title %}RistoDeliz{% endblock %}
-
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}RistoDeliz{%endblock %} 
 
 {% block content %}
 <!-- Hero Section -->
 <section class="hero text-center">
-  <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+  <div
+    id="carouselExampleAutoplaying"
+    class="carousel slide"
+    data-bs-ride="carousel"
+  >
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="{% static 'images/background.webp' %}" class="d-block w-100" alt="pizza, olives, and a bottle and glass of red wine ">
+        <img
+          src="{% static 'images/background.webp' %}"
+          class="d-block w-100"
+          alt="pizza, olives, and a bottle and glass of red wine "
+        />
       </div>
       <div class="carousel-item">
-        <img src="{% static 'images/background2.webp' %}" class="d-block w-100" alt="pasta">
+        <img
+          src="{% static 'images/background2.webp' %}"
+          class="d-block w-100"
+          alt="pasta"
+        />
       </div>
       <div class="carousel-item">
-        <img src="{% static 'images/background5.webp' %}" class="d-block w-100" alt="al fresco dining image">
+        <img
+          src="{% static 'images/background5.webp' %}"
+          class="d-block w-100"
+          alt="al fresco dining image"
+        />
       </div>
     </div>
 
-    <div class="carousel-caption d-flex flex-column justify-content-center h-100">
+    <div
+      class="carousel-caption d-flex flex-column justify-content-center h-100"
+    >
       <div class="hero-text mx-auto px-3">
         <h1 class="hero-title">RistoDeliz</h1>
-        <h2 class="hero-subtitle"><i>"A Taste of Italy, Right at Your Table"</i></h2>
+        <h2 class="hero-subtitle">
+          <i>"A Taste of Italy, Right at Your Table"</i>
+        </h2>
       </div>
     </div>
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="prev"
+    >
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="next"
+    >
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
   </div>
 </section>
 
-
 <!-- Introduction -->
 <section class="py-4 mt-4">
-    <div class="row justify-content-center">
-        <div id="intro" class="col-md-10 text-center">
-            <p class="fs-4"><em>
-                RistoDeliz is where the soul of Italy is served on every plate.
-                Form the rich aroma of slow-simmered sauces to the first bite of handmade pasta,
-                our dishes bring you the warmth and passion of true Italian cooking.<br>
-                Prepare to savour an experience that's as genuine as Nonna's kitchen.
-            </em></p>
-            <a href="{% url 'book_table' %}" class="btn btn-primary btn-green-hover mt-3 me-3">Book a Table</a> <!--btn-green-hover to override btn-primary-->
-            <a href="{% url 'menu' %}" class="btn btn-primary btn-green-hover mt-3">View our Menu</a>
-        </div>
+  <div class="row justify-content-center">
+    <div id="intro" class="col-md-10 text-center">
+      <p class="fs-4">
+        <em>
+          RistoDeliz is where the soul of Italy is served on every plate. Form
+          the rich aroma of slow-simmered sauces to the first bite of handmade
+          pasta, our dishes bring you the warmth and passion of true Italian
+          cooking.<br />
+          Prepare to savour an experience that's as genuine as Nonna's kitchen.
+        </em>
+      </p>
+      <!--btn-green-hover to override btn-primary-->
+      <a
+        href="{% url 'book_table' %}"
+        class="btn btn-primary btn-green-hover mt-3 me-3"
+        >Book a Table</a
+      >
+      <a href="{% url 'menu' %}" class="btn btn-primary btn-green-hover mt-3"
+        >View our Menu</a
+      >
     </div>
+  </div>
 </section>
 
 <!-- Meal Deal -->
- <section class="py-4">
+<section class="py-4">
   <div class="container-fluid bg-light">
     <div class="row align-items-center">
       <div class="col-lg-6 text-center mt-5">
         <h2>Spring's Meal Deal</h2>
-        <p>Enjoy our Special Offer 3 course meal for £15.99! Limited time offer.</p>
+        <p>
+          Enjoy our Special Offer 3 course meal for £15.99! Limited time offer.
+        </p>
       </div>
-      <div  class="col-lg-6 d-flex justify-content-center mb-5 mt-5">
-        <img src="{% static 'images/meal-deal.jpg' %}" alt="Special Deal" class="img-fluid rounded shadow">
+      <div class="col-lg-6 d-flex justify-content-center mb-5 mt-5">
+        <img
+          src="{% static 'images/meal-deal.jpg' %}"
+          alt="Special Deal"
+          class="img-fluid rounded shadow"
+        />
       </div>
     </div>
   </div>
- </section>
+</section>
 
 <!-- Private Dining -->
 <section class="container-fluid py-4">
-    <div class="row justify-content-center">
-        <div id="private-dining" class="col-md-10 text-center">
-            <h2>Private Dining</h2>
-            <p class="fs-4">
-                At RistoDeliz, we offer private dining options perfect for intimate gatherings, celebrations, or business events.<br>
-                Please contact the restaurant directly, we will be happy to discuss your requirements,
-                and create a memorable occasion just for you!
-            </p>
-            <p>Give us a ring @ 0123 4567 8910</p>
-        </div>
+  <div class="row justify-content-center">
+    <div id="private-dining" class="col-md-10 text-center">
+      <h2>Private Dining</h2>
+      <p class="fs-4">
+        At RistoDeliz, we offer private dining options perfect for intimate
+        gatherings, celebrations, or business events.<br />
+        Please contact the restaurant directly, we will be happy to discuss your
+        requirements, and create a memorable occasion just for you!
+      </p>
+      <p>Give us a ring @ 0123 4567 8910</p>
     </div>
+  </div>
 </section>
 
 <!-- Sign Up Invite -->
- <section class="py-5">
+<section class="py-5">
   <div class="container-fluid bg-light">
     <div class="row align-items-center">
       <div class="col-lg-6 d-flex justify-content-center mt-5 mb-5">
-        <img src="{% static 'images/signup-invite.jpg' %}" alt="Join Us" class="img-fluid rounded shadow">
+        <img
+          src="{% static 'images/signup-invite.jpg' %}"
+          alt="Join Us"
+          class="img-fluid rounded shadow"
+        />
       </div>
       <div class="col-lg-6 text-center mb-lg-0">
         <h2 class="fs-3">Join Us!</h2>
         <p class="fs-2">Sign up to receive exclusive offers!</p>
-        <a href="{% url 'signup' %}" class="btn btn-success mt-2 mb-5">Click here to Join!</a>
+        <a href="{% url 'signup' %}" class="btn btn-success mt-2 mb-5"
+          >Click here to Join!</a
+        >
       </div>
     </div>
   </div>
- </section>
+</section>
 {% endblock %}
