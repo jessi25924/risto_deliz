@@ -156,10 +156,3 @@ def menu(request):
         grouped_items[category].append(item)
 
     return render(request, 'booking_table/menu.html', {'grouped_items': grouped_items})
-
-
-def custom_404_view(request, exception):
-    """
-    Renders the '404.html' template with a 404 status code.
-    """
-    return render(request, "404.html", status=404)
