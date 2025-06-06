@@ -1,22 +1,29 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="menu-bg py-5">
-  <div class="glass-box p-4 rounded">
-    <h1>Restaurant Menu</h1>
+<div class="menu-bg dashboard-wrapper py-5">
+  <div class="glass-box p-4 rounded mt-5">
+    <h1 class="text-center">Restaurant Menu</h1>
 
-    {% for category, items in grouped_items.items %}
-      <h2>{{ category }}</h2>
-      <ul>
+  {% for category, items in grouped_items.items %}
+    <div class="mt-5 mb-5">
+      <h2 class="text-center">{{ category }}</h2>
+      <div class="row">
         {% for item in items %}
-          <li>
-            <strong>{{ item.name }}</strong>: {{ item.description }} – £{{ item.price }}
-          </li>
+          <div class="col-12 col-md-6 mt-4">
+            <h4>{{ forloop.counter }}. {{ item.name }}</h4>
+            <p>{{ item.description }}</p>
+            <p><strong>£{{ item.price }}</strong></p>
+          </div>
         {% endfor %}
-      </ul>
-    {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
 
-    <a href="{% url 'book_table' %}" class="btn btn-primary mt-4">Back to Booking</a>
+  <div class="text-center mt-5">
+    <a href="{% url 'book_table' %}" class="btn btn-primary btn-lg">Back to Booking</a>
+  </div>
   </div>
 </div>
 {% endblock %}
