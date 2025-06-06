@@ -83,12 +83,12 @@ main .container {
 /* Shared style for all content pages but home */
 .page-wrapper {
     background-color: rgba(255, 255, 255, 0.7);
-    padding: 3rem;
+    padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    max-width: 900px; 
-    margin: 30px auto;
-    margin-top: 5rem;
+    max-width: 100%; 
+    width: 90%;
+    margin: 5rem auto 2rem auto;
 }
 
 .dashboard-wrapper {
@@ -114,6 +114,24 @@ main .container {
   box-shadow: 0 0 20px rgba(0,0,0,0.2);
   color: #333;
   border-radius: 12px;
+}
+
+/** Table **/
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* Ensures mobile can scroll if needed */
+}
+
+table th, table td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
 }
 
 /* override built-in textarea style*/
