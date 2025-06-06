@@ -112,6 +112,16 @@ main .container {
   max-width: 100%;
 }
 
+/* home images */
+.img-fluid {
+    max-width: 700px;
+    width: 100%;
+}
+
+#private-dining, #intro {
+    color: white;
+}
+
 /* Footer background */
 footer {
     background-color: var(--background-contrast-color);
