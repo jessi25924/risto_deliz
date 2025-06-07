@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Booking
-from .models import Table
+from .models import Booking, Table
 from django.core.exceptions import ValidationError
 
 class SignUpForm(UserCreationForm):
@@ -32,7 +31,7 @@ class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
         fields = (
-            'table', 'date', 'time', 'guest_count', 'email', 'phone', 'suggestion'
+            'date', 'time', 'guest_count', 'email', 'phone', 'suggestion'
         )
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
@@ -44,3 +43,11 @@ class BookingForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if 'email' in self.fields:
             self.fields['email'].widget.attrs['readonly'] = True
+    
+    def clean_guest_count(self):
+        count = self.cleaned_data['guest_count']
+        if count > 20:
+            raise ValidationError(
+                "Sorry, we cannot accept your booking. Capacity exceeded."
+            )
+        return count
