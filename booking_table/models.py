@@ -50,6 +50,8 @@ class Booking(models.Model):
     table = models.ForeignKey(
         'Table',
         on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
     date = models.DateField()
     time = models.TimeField()
