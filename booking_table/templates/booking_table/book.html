@@ -1,37 +1,30 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base.html" %} 
+{% load static %} 
+{% block title %}Make a Booking{%endblock %} 
 
-{% block title %}Make a Booking{% endblock %}
 {% block content %}
-<div class="page-wrapper">
-   <h2>Book a Table</h2>
+<div class="book-bg">
+  <div class="page-wrapper bg-light">
+    <h2>Book a Table</h2>
+    <p><a href="{% url 'menu' %}">View Our Menu</a></p>
+    <form method="post">
+      {% csrf_token %} {{ form.non_field_errors }}
+      <p>{{ form.table.label_tag }} {{ form.table }}</p>
 
-  <p><a href="{% url 'menu' %}">View Our Menu</a></p>
-  <form method="post">
-    {% csrf_token %}
-    
-    {{ form.non_field_errors }}
-    <p>{{ form.table.label_tag }}
-       {{ form.table }}
-    </p>
+      <p>{{ form.date.label_tag }} {{ form.date }}</p>
 
-    <p>{{ form.date.label_tag }}
-       {{ form.date }}
-    </p>
+      <p>{{ form.time.label_tag }} {{ form.time }}</p>
 
-    <p>{{ form.time.label_tag }}
-       {{ form.time }}
-    </p>
+      <!-- other fields -->
+      <p>{{ form.guest_count.label_tag }} {{ form.guest_count }}</p>
+      <p>{{ form.email.label_tag }} {{ form.email }}</p>
+      <p>{{ form.phone.label_tag }} {{ form.phone }}</p>
+      <p>{{ form.suggestion.label_tag }} {{ form.suggestion }}</p>
 
-    <!-- other fields -->
-    <p>{{ form.guest_count.label_tag }} {{ form.guest_count }}</p>
-    <p>{{ form.email.label_tag }} {{ form.email }}</p>
-    <p>{{ form.phone.label_tag }} {{ form.phone }}</p>
-    <p>{{ form.suggestion.label_tag }} {{ form.suggestion }}</p>
-
-    <button class="btn btn-primary" type="submit">Book Now</button>
-  </form>
+      <button class="btn btn-primary" type="submit">Book Now</button>
+    </form>
+  </div>
 </div>
 
-  <script src="{% static 'js/booking.js' %}"></script>
+<script src="{% static 'js/booking.js' %}"></script>
 {% endblock %}
