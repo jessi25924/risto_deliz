@@ -2,7 +2,7 @@
 
 {% block title%}Booking Cancelled{% endblock %}
 {% block content %}
-  <div class="page-wrapper mt-5">
+  <div class="page-wrapper dashboard-wrapper py-5">
     <h2>Successfully Cancelled!!</h2>
     <p>Your booking for {{ booking.date}} at {{ booking.time}} is now cancelled.</p>
     <a href="{% url 'dashboard' %}" class="btn btn-primary">back to your account</a>
