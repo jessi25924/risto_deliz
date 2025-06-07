@@ -3,11 +3,12 @@ from django.contrib.auth import login
 from .forms import SignUpForm, BookingForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
-from .models import Booking, MenuItem
+from .models import Booking, MenuItem, Table
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
+from django.db.models import Sum
 
 
 def home(request):
@@ -48,50 +49,71 @@ class CustomLoginView(LoginView):
     template_name = 'registration/login.html'
 
 
-@login_required
+MAX_CAPACITY = 20
+@login_required 
 def book_table(request):
     """
-    Display and process the booking form with HTML5 date & time pickers.
-    On successful booking, send confirmatoin email with booking details.
-    Render a success template with link to dashboard.
+    Display/process the booking form with HTML5 date & time pickers.
+    Enforce a 20-guest per slot capacity.  On success, send confirmation email
+    and render a success template.
     """
+    # Prefill email if user is logged in
+    initial_data = {'email': request.user.email} if request.user.is_authenticated else {}
 
-    # set initial if user is authenticated / Idea suggested by Lewis (Cohort facilitator): Prefill email field with logged-in user's email
-    initial_data = {}
-    if request.user.is_authenticated:
-        initial_data['email'] = request.user.email
-
-    # Create form with initial data
     form = BookingForm(request.POST or None, initial=initial_data)
 
-    # On POST: validate, save, and redirect
     if request.method == 'POST' and form.is_valid():
         booking = form.save(commit=False)
         booking.user = request.user
-        booking.save()
 
-        # Compose confirmation email
-        message = (
-            f"Hi {booking.user.username},\n\n"
-            f"Thank you for reserving a table on {booking.date} at {booking.time}.\n"
-            f"For {booking.guest_count} guest.\n\n"
-            f"This is not a confirmation yet, a member of staff will contact you shortly to confirm your table."
-        )
-        #Idea suggested by Lewis (Cohort facilitator)
-        send_mail(
-            subject='Booking Request Confirmation',
-            message=message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[booking.email], 
-            fail_silently=False,
-        )
-        #render success page instead of redirect
-        return render(request, 'booking_table/booking_success.html') 
+        # 1. Sum existing guests at this date+time
+        agg = Booking.objects.filter(
+            date=booking.date,
+            time=booking.time
+        ).aggregate(total=Sum('guest_count'))
+        current_total = agg['total'] or 0
 
-    # Render the form (empty or with errors)
-    return render(request, 'booking_table/book.html', {
-        'form': form,
-    })
+        # 2. Capacity check
+        if current_total + booking.guest_count > MAX_CAPACITY:
+            form.add_error(
+                None,
+                f"Sorry, we’ve reached our {MAX_CAPACITY}-guest capacity for that slot. "
+                "Please choose another time or reduce your party size."
+            )
+        else:
+            # 2. Automated table assignment
+            booked_ids = Booking.objects.filter(
+                date=booking.date,
+                time=booking.time
+            ).values_list('table_id', flat=True)
+
+            available = Table.objects.exclude(id__in=booked_ids)\
+                                     .filter(seating_capacity__gte=booking.guest_count)
+
+            if not available.exists():
+                form.add_error(None,
+                    "Sorry, no table is available for that size party at that time."
+                )
+            else:
+                booking.table = available.first()
+                booking.save()
+
+                # 3. Confirmation email + success page
+                send_mail(
+                    subject='Booking Request Confirmation',
+                    message=(
+                        f"Hi {booking.user.username},\n\n"
+                        f"Thank you for reserving on {booking.date} at {booking.time} "
+                        f"for {booking.guest_count} guest(s).\n\n"
+                        "This isn’t final yet—our staff will confirm shortly."
+                    ),
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[booking.email],
+                    fail_silently=False,
+                )
+                return render(request, 'booking_table/booking_success.html')
+
+    return render(request, 'booking_table/book.html', {'form': form})
 
 
 @login_required
