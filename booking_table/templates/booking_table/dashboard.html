@@ -7,6 +7,7 @@
   <h2>Welcome, {{ user.get_full_name|default:user.username }}!</h2>
   <p>This is your dashboard. Here you’ll see and manage your bookings.</p>
    <h3>My Bookings</h3>
+   {% if bookings %}
    <div class="table-responsive">
     <table>
     <tr>
@@ -31,6 +32,9 @@
     {% endfor %}
   </table>
   </div>
+  {% else %}
+  <p>No bookings yet.</p>
+  {% endif %}
   <link class="nav-item"><a href="{% url 'book_table' %}" class="btn btn-warning mt-4 ms-2">Back to Booking</a></link>
 </div>
   
