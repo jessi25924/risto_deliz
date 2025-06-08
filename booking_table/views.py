@@ -119,25 +119,28 @@ def book_table(request):
 @login_required
 def edit_booking(request, pk):
     """
-    Let user edit their booking.
-    If a unique_together violation occurs, show an error message.
+    Let user edit their booking while enforcing 20 guests limit per slot.
     """
     booking = get_object_or_404(Booking, pk=pk, user=request.user)
     form = BookingForm(request.POST or None, instance=booking)
-    error = None
 
-    if request.method == 'POST':
-        try:
-            if form.is_valid():
-                form.save()
-                return redirect('dashboard')
-        except IntegrityError:
-            error = "Table is already booked at the selected date and time"
+    if request.method == 'POST' and form.is_valid():
+        updated = form.save(commit=False)
+
+        # total guest at this slot
+        total = Booking.objects.filter(
+            date=updated.date, time=updated.time
+        ).exclude(pk=booking.pk).aggregate(Sum('guest_count'))['guest_count__sum'] or 0
+
+        if total + updated.guest_count > 20:
+            form.add_error(None, "Sorry, that slot is fully booked.")
+        else:
+            updated.save()
+            return redirect('dashboard')
     
     return render(request, 'booking_table/edit_booking.html', {
         'form': form,
         'booking': booking,
-        'error': error,
     })
 
 
