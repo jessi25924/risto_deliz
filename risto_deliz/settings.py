@@ -142,7 +142,8 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/login/'
 
 
-# Idea suggested by Lewis (Cohort facilitator): Sending a real email confirmation
+# Idea suggested by Lewis (Cohort facilitator): 
+# Sending a real email confirmation
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
