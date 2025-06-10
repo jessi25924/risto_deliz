@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.db.models import Sum
+from datetime import datetime, date
 
 
 def home(request):
@@ -50,11 +51,12 @@ class CustomLoginView(LoginView):
 
 
 MAX_CAPACITY = 20
-@login_required 
+
+@login_required
 def book_table(request):
     """
     Display/process the booking form with HTML5 date & time pickers.
-    Enforce a 20-guest per slot capacity.  On success, send confirmation email
+    Enforce a 20-guest per slot capacity. On success, send confirmation email
     and render a success template.
     """
     # Prefill email if user is logged in
@@ -66,52 +68,57 @@ def book_table(request):
         booking = form.save(commit=False)
         booking.user = request.user
 
-        # 1. Sum existing guests at this date+time
-        agg = Booking.objects.filter(
-            date=booking.date,
-            time=booking.time
-        ).aggregate(total=Sum('guest_count'))
-        current_total = agg['total'] or 0
-
-        # 2. Capacity check
-        if current_total + booking.guest_count > MAX_CAPACITY:
-            form.add_error(
-                None,
-                f"Sorry, we’ve reached our {MAX_CAPACITY}-guest capacity for that slot. "
-                "Please choose another time or reduce your party size."
-            )
+        # Check for past date/time
+        booking_datetime = datetime.combine(booking.date, booking.time)
+        if booking_datetime < datetime.now():
+            form.add_error(None, "You cannot book a table in the past.")
         else:
-            # 2. Automated table assignment
-            booked_ids = Booking.objects.filter(
+            # 1. Sum existing guests at this date+time
+            agg = Booking.objects.filter(
                 date=booking.date,
                 time=booking.time
-            ).values_list('table_id', flat=True)
+            ).aggregate(total=Sum('guest_count'))
+            current_total = agg['total'] or 0
 
-            available = Table.objects.exclude(id__in=booked_ids)\
-                                     .filter(seating_capacity__gte=booking.guest_count)
-
-            if not available.exists():
-                form.add_error(None,
-                    "Sorry, no table is available for that size party at that time."
+            # 2. Capacity check
+            if current_total + booking.guest_count > MAX_CAPACITY:
+                form.add_error(
+                    None,
+                    f"Sorry, we’ve reached our {MAX_CAPACITY}-guest capacity for that slot. "
+                    "Please choose another time or reduce your party size."
                 )
             else:
-                booking.table = available.first()
-                booking.save()
+                # 2. Automated table assignment
+                booked_ids = Booking.objects.filter(
+                    date=booking.date,
+                    time=booking.time
+                ).values_list('table_id', flat=True)
 
-                # 3. Confirmation email + success page
-                send_mail(
-                    subject='Booking Request Confirmation',
-                    message=(
-                        f"Hi {booking.user.username},\n\n"
-                        f"Thank you for reserving on {booking.date} at {booking.time} "
-                        f"for {booking.guest_count} guest(s).\n\n"
-                        "This isn’t final yet—our staff will confirm shortly."
-                    ),
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[booking.email],
-                    fail_silently=False,
-                )
-                return render(request, 'booking_table/booking_success.html')
+                available = Table.objects.exclude(id__in=booked_ids)\
+                                         .filter(seating_capacity__gte=booking.guest_count)
+
+                if not available.exists():
+                    form.add_error(None,
+                        "Sorry, no table is available for that size party at that time."
+                    )
+                else:
+                    booking.table = available.first()
+                    booking.save()
+
+                    # 3. Confirmation email + success page
+                    send_mail(
+                        subject='Booking Request Confirmation',
+                        message=(
+                            f"Hi {booking.user.username},\n\n"
+                            f"Thank you for reserving on {booking.date} at {booking.time} "
+                            f"for {booking.guest_count} guest(s).\n\n"
+                            "This isn’t final yet—our staff will confirm shortly."
+                        ),
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        recipient_list=[booking.email],
+                        fail_silently=False,
+                    )
+                    return render(request, 'booking_table/booking_success.html')
 
     return render(request, 'booking_table/book.html', {'form': form})
 
@@ -127,17 +134,22 @@ def edit_booking(request, pk):
     if request.method == 'POST' and form.is_valid():
         updated = form.save(commit=False)
 
-        # total guest at this slot
-        total = Booking.objects.filter(
-            date=updated.date, time=updated.time
-        ).exclude(pk=booking.pk).aggregate(Sum('guest_count'))['guest_count__sum'] or 0
-
-        if total + updated.guest_count > 20:
-            form.add_error(None, "Sorry, that slot is fully booked.")
+        # Prevent setting booking in the past
+        updated_datetime = datetime.combine(updated.date, updated.time)
+        if updated_datetime < datetime.now():
+            form.add_error(None, "You cannot set a booking in the past.")
         else:
-            updated.save()
-            return redirect('dashboard')
-    
+            # total guest at this slot, excluding this booking
+            total = Booking.objects.filter(
+                date=updated.date, time=updated.time
+            ).exclude(pk=booking.pk).aggregate(Sum('guest_count'))['guest_count__sum'] or 0
+
+            if total + updated.guest_count > 20:
+                form.add_error(None, "Sorry, that slot is fully booked.")
+            else:
+                updated.save()
+                return redirect('dashboard')
+
     return render(request, 'booking_table/edit_booking.html', {
         'form': form,
         'booking': booking,
