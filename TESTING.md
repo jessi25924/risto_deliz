@@ -12,7 +12,13 @@ This project was tested manually to verify core functionality and usability. No 
 
 ## Validation
 
+### HTML
+
 - To validate all HTML files, the recommended validator service by Code Institute which is [HTML Validator](https://validator.w3.org/) was used.
+
+<details>
+ 
+**<summary> View CSS Code Testing </summary>**
 
 | Page      | Comment   | Screenshot         |  |
 | --------- | --------- | ------------------ | ------ |
@@ -25,13 +31,22 @@ This project was tested manually to verify core functionality and usability. No 
 |   Edit    | No Errors | ![](documentation/testing/html-validator-edit.png) |  |
 |   Cancel  | No Errors | ![](documentation/testing/html-validator-cancel.png) |  |
 
+</details>
 
+### CSS
 - To validate the CSS file, the recommended validator service by Code Institute which is [CSS Validator](https://jigsaw.w3.org/css-validator/) was used.
+
+<details>
+ 
+ **<summary> View CSS Code Testing </summary>**
 
 | Validator                                          | Comment  | Screenshot                                    |
 | -------------------------------------------------- | -------- | --------------------------------------------- |
 | [Jigsaw W3C](https://jigsaw.w3.org/css-validator/) | No Error | ![](documentation/testing/validation-css.png) |
 
+</details>
+
+### Python
 - To validate Python code, the recommended validator service by Code Institute which is [Python PEP8 Checker](https://ww7.pep8online.com/?usid=24&utid=12257950545) was used.
 
 <details>
@@ -41,16 +56,18 @@ This project was tested manually to verify core functionality and usability. No 
 | File              | Comment | Screenshot         |
 | ----------------- | ------- | ------------------ |
 | **risto_deliz**   |         |                    |
-| **setting.py**    |         | ![](documentation) |
-| **url.py**        |         | ![](documentation) |
+| **settings.py**    | Line exceeds recommended length; left as-is for readability and to avoid further warnings *        | ![](documentation/testing/python-checker-setting.png) |
+| **url.py**        |    No Errors     | ![](documentation/testing/python-checker-url.png) |
 | **booking_table** |         |                    |
-| **admin.py**      |         | ![](documentation) |
-| **apps.py**       |         | ![](documentation) |
-| **forms.py**      |         | ![](documentation) |
-| **models.py**     |         | ![](documentation) |
-| **views.py**      |         | ![](documentation) |
+| **admin.py**      |    *     | ![](documentation/testing/python-checker-admin.png) |
+| **forms.py**      |    *     | ![](documentation/testing/python-checker-forms.png) |
+| **models.py**     |    *     | ![](documentation/testing/python-checker-models.png)|
+| **views.py**      |    *     | ![](documentation/testing/python-checker-views.png) |
 
  </details>
+
+
+## Lighthouse
 
 - For auditing Performance, Accessibility, and Best Practices [Developer Tools Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/) was used.
 
@@ -79,13 +96,17 @@ This project was tested manually to verify core functionality and usability. No 
 - The application was tested to ensure it will respond correctly on desktop, tablet, and mobile devices, maintaining usability and layout integrity.
 <details>
  
- <summary>View Responsiveness Screenshot on Different Devices</summary>
+ **<summary>View Responsiveness Screenshot on Different Devices</summary>**
 
 | Device      | Comment | Screenshot             |
-| ----------- | ------- | ---------------------- |
-| **Desktop** |         | ![home](documentation) |
-| **Tablet**  |         | ![home](documentation) |
-| **Mobile**  |         | ![home](documentation) |
+| ----------- | ---------| ------------- |
+| **19" Desktop 1440x900** |  [ResponsiveChecker](https://responsivedesignchecker.com/)  |![home](documentation/testing/responsiveness-d1440x900h.png) |
+| **Laptop 1024x857**  |   Chrome(devtools)     | ![home](documentation/testing/responsiveness-laptop1024x857.png) |
+| **iPad Retina 768x1024**  | [ResponsiveChecker](https://responsivedesignchecker.com/)   | ![home](documentation/testing/responsiveness-ipad768x1024.png) |
+| **Nexus 600x960**  | [ResponsiveChecker](https://responsivedesignchecker.com/)       | ![home](documentation/testing/responsiveness-nexus600x960.png) |
+| **iPhone 414x736**  |  [ResponsiveChecker](https://responsivedesignchecker.com/)      | ![home](documentation/testing/responsiveness-iphone414x736.png) |
+| **Mobile 425x642**  |   Chrome(devtools)     | ![home](documentation/testing/responsiveness-mobile425x642.png) |
+
 
 </details>
 
