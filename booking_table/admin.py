@@ -4,6 +4,7 @@ from .models import MenuItem
 from django.core.exceptions import ValidationError
 from django.db.models import Sum
 
+
 # Register your models here.
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
@@ -31,7 +32,6 @@ class BookingAdmin(admin.ModelAdmin):
                 level=messages.ERROR
             )
             return  # Prevent saving
-       
         # Auto-assign a suitable table if not manually selected
         if not obj.table:
             suitable_table = Table.objects.filter(
@@ -61,8 +61,9 @@ class TableAdmin(admin.ModelAdmin):
 
 class MenuItemAdmin(admin.ModelAdmin):
     """
-    Admin configuration for the MenuItem model. 
+    Admin configuration for the MenuItem model.
     """
     list_display = ('name', 'category', 'price')
+
 
 admin.site.register(MenuItem, MenuItemAdmin)

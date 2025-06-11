@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+
 # Create your models here.
 class Table(models.Model):
     """
@@ -67,7 +68,6 @@ class Booking(models.Model):
 
     class Meta:
         unique_together = ('table', 'date', 'time')
-        
     
     def __str__(self):
         """
@@ -77,7 +77,7 @@ class Booking(models.Model):
             f"{self.user.username} - {self.table} on {self.date} at {self.time}"
             f"({self.guest_count} guests)"
         )
-    
+
 
 class MenuItem(models.Model):
     """

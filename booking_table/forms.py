@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Booking, Table
 from django.core.exceptions import ValidationError
 
+
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
@@ -37,13 +38,14 @@ class BookingForm(forms.ModelForm):
             'date': forms.DateInput(attrs={'type': 'date'}),
             'time': forms.TimeInput(attrs={'type': 'time'}),
         }
-    
-    # Idea suggested by Lewis (Cohort facilitator): Prefill email field with logged-in user's email
+            
+    # Idea suggested by Lewis (Cohort facilitator):
+    # Prefill email field with logged-in user's email
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if 'email' in self.fields:
             self.fields['email'].widget.attrs['readonly'] = True
-    
+
     def clean_guest_count(self):
         count = self.cleaned_data['guest_count']
         if count > 20:

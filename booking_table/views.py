@@ -18,6 +18,7 @@ def home(request):
     """
     return render(request, 'home.html')
 
+
 def signup(request):
     """
     Handle user signup process.
@@ -51,6 +52,7 @@ class CustomLoginView(LoginView):
 
 
 MAX_CAPACITY = 20
+
 
 @login_required
 def book_table(request):
@@ -98,9 +100,7 @@ def book_table(request):
                                          .filter(seating_capacity__gte=booking.guest_count)
 
                 if not available.exists():
-                    form.add_error(None,
-                        "Sorry, no table is available for that size party at that time."
-                    )
+                    form.add_error(None, "Sorry, no table is available for that size party at that time.")
                 else:
                     booking.table = available.first()
                     booking.save()
@@ -164,7 +164,6 @@ def cancel_booking(request, pk):
     POST: mark as cancelled and show a success page.
     """
     booking = get_object_or_404(Booking, pk=pk, user=request.user)
-    
     if request.method == 'POST':
         # user confirmed cancellation
         booking.status = 'Cancelled'
@@ -172,7 +171,6 @@ def cancel_booking(request, pk):
         return render(request, 'booking_table/cancel_success.html', {
             'booking': booking
         })
-    
     # GET: ask for confirmaiton
     return render(request, 'booking_table/confirm_cancel.html', {
         'booking': booking
