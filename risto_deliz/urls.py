@@ -20,7 +20,7 @@ from booking_table.views import home
 
 urlpatterns = [
     path('', home, name='home'),
-    path('accounts/', include('django.contrib.auth.urls')),  # provides login/logout
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', include('booking_table.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -29,7 +29,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', 'https://risto-deliz-9958e7302963.herokuapp.com/']
+ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1',
+                 'https://risto-deliz-9958e7302963.herokuapp.com/']
 
 
 # Application definition
@@ -62,7 +63,7 @@ ROOT_URLCONF = 'risto_deliz.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'templates' ],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,7 +143,7 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/login/'
 
 
-# Idea suggested by Lewis (Cohort facilitator): 
+# Idea suggested by Lewis (Cohort facilitator):
 # Sending a real email confirmation
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
