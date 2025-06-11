@@ -14,13 +14,17 @@ This project was tested manually to verify core functionality and usability. No 
 
 - To validate all HTML files, the recommended validator service by Code Institute which is [HTML Validator](https://validator.w3.org/) was used.
 
-| Page      | Comment   | Screenshot         |
-| --------- | --------- | ------------------ |
-| Home/Base | No Errors | ![](documentation) |
-|           | No Errors | ![](documentation) |
-|           | No Errors | ![](documentation) |
-|           | No Errors | ![](documentation) |
-|           | No Errors | ![](documentation) |
+| Page      | Comment   | Screenshot         |  |
+| --------- | --------- | ------------------ | ------ |
+| Home/Base | One Warning (This section doesn't need a heading; a div is used to group content semantically. See screenshot attached.)| ![](documentation/testing/html-validator-home.png) |![](documentation/testing/html-validator-warning.png) |
+|  Menu     | No Errors | ![](documentation/testing/html-validator-menu.png) |  |
+|  Sign Up  | No Errors | ![](documentation/testing/hmtl-validator-signup.png) |  |
+|  Log In   | No Errors | ![](documentation/testing/html-validator-login.png) |  |
+|Booking Form | No Errors | ![](documentation/testing/html-validator-book.png) |    |
+| Dashboard/My Account | No Errors | ![](documentation/testing/hmtl-validator-dashboard.png) |   |
+|   Edit    | No Errors | ![](documentation/testing/html-validator-edit.png) |  |
+|   Cancel  | No Errors | ![](documentation/testing/html-validator-cancel.png) |  |
+
 
 - To validate the CSS file, the recommended validator service by Code Institute which is [CSS Validator](https://jigsaw.w3.org/css-validator/) was used.
 
@@ -89,7 +93,7 @@ This project was tested manually to verify core functionality and usability. No 
 - The application was tested for basic compatibility on major browsers including Chrome, Firefox, MS Edge and Opera. Core functionality and layout appeared consistent across these browsers.
 <details>
  
- <summary>View Compatibility Screenshot on Different Browser</summary>
+ **<summary>View Compatibility Screenshot on Different Browser</summary>**
 
 | Browser     | Comment | Screenshot             |
 | ----------- | ------- | ---------------------- |
